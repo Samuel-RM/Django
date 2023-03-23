@@ -29,25 +29,25 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-DJANGO_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-)
+]
 
-THIRD_APPS = (
-   # 'jazzmin',
-)
+THIRD_APPS = [
+    #'jazzmin',
+]
 
-LOCAL_APPS = (
-    'polls',
-)
+LOCAL_APPS = [
+    'polls.apps.PollsConfig',
+]
 
+INSTALLED_APPS = THIRD_APPS + INSTALLED_APPS  + LOCAL_APPS
 
-INSTALLED_APPS = THIRD_APPS + DJANGO_APPS  + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
