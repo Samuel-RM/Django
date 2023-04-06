@@ -3,8 +3,8 @@ from django.http import HttpResponse ,  HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from .models import Question , Choice
-
-
+from django.utils import timezone
+from django.db.models import Count
 # def index(request):
 #     lates_question_list = Question.objects.all()
 #     return render(request, "polls/index.html", {
@@ -26,18 +26,27 @@ class IndexView(generic.ListView):
     context_object_name = "lates_question_list"
     
     def get_queryset(self):
-        """return the last five published question"""
-        return Question.objects.order_by("-pub_date")[:5]
-    
+        """return the last five published question, that have at leat two choices"""
+        question =  Question.objects.filter(pub_date__lte=timezone.now())
+        question = question.alias(entries=Count("choice")).filter(entries__gte=2)
+        return question.order_by("pub_date")[:5]
+
+
 class DetailView(generic.DetailView):
     model = Question
     template_name = "polls/detail.html"
+
+    def get_queryset(self):
+        """Excludes any question that arent published yet"""
+        return Question.objects.filter(pub_date__lte=timezone.now())
+
     
 class ResultlView(generic.DetailView):
     model = Question
     template_name = "polls/result.html"
     
-
+    def get_queryset(self):
+        return Question.objects.filter(pub_date__lte=timezone.now())   
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
