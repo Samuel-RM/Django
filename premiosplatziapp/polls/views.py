@@ -29,7 +29,7 @@ class IndexView(generic.ListView):
         """return the last five published question, that have at leat two choices"""
         question =  Question.objects.filter(pub_date__lte=timezone.now())
         question = question.alias(entries=Count("choice")).filter(entries__gte=2)
-        return question.order_by("pub_date")[:5]
+        return question.order_by("-pub_date")[:5]
 
 
 class DetailView(generic.DetailView):

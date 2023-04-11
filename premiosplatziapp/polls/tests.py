@@ -84,7 +84,7 @@ class QuestionIndexViewTests(TestCase):
     
     def test_two_past_question(self):
         """The question index page may display multiples question"""
-        past_question1 = create_question(question_text="pastquestion1",days=-10)
+        past_question1 = create_question(question_text="pastquestion1",days=-1)
         past_question2 = create_question(question_text="pastquestion2",days=-10)
         choice1 = create_choice(pk=past_question1.id, choice_text="1", votes=0)
         choice2 = create_choice(pk=past_question1.id, choice_text="1", votes=0)
