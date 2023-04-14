@@ -1,9 +1,18 @@
-{% if  lates_question_list %}
-    <ul>
-    {% for question in lates_question_list  %}
-     <li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a></li>
-    {% endfor %}   
-    </ul>
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls\sa.css' %}"/>
+
+{% if lates_question_list %}
+<ul>
+  {% for question in lates_question_list %}
+  <li class="color-change-2x">
+    <a href="{% url 'polls:detail' question.id %}"
+      >{{ question.question_text }}</a
+    >
+    {% comment %} polls sale del app_name y detail sale del name de la vista en
+    urls.py {% endcomment %}
+  </li>
+  {% endfor %}
+</ul>
 {% else %}
-    <p>No polls are available</p>
+<p>No polls are available</p>
 {% endif %}
