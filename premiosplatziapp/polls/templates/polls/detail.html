@@ -1,38 +1,54 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'polls\sa.css' %}"/>
-
-<form action="{% url 'polls:vote' question.id %}" method="post">
-{% csrf_token %}
-<fieldset>
-    <legend><h1>{{question.question_text}}</h1></legend>
-    {% if error_mesages %}
-        <p><strong>{{error_mesages}}</strong></p>
-    {% endif %}
-    {% for choice in question.choice_set.all %}
-        <input 
-            type="radio"
-            name="choice"
-            id="choice{{ forloop.counter }}"
-            value="{{ choice.id }}"
-            {% comment %} required {% endcomment %}
-        >
-        <label for="choice{{ forloop.counter }}">
-            {{choice.choice_text}}
-        </label>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'polls/sty.css' %}">
+    <link rel="stylesheet" href="{% static 'polls/detail.css' %}">
+    <title>{{question.question_text}}</title>
+</head>
+<body> 
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>{{question.question_text}}</h1></legend>
+            {% if error_mesages %}
+                <p><strong>{{error_mesages}}</strong></p>
+            {% endif %}
+            {% for choice in question.choice_set.all %}
+                <input 
+                    type="radio"
+                    name="choice"
+                    id="choice{{ forloop.counter }}"
+                    value="{{ choice.id }}"
+                    {% comment %} required {% endcomment %}
+                >
+                <label for="choice{{ forloop.counter }}">
+                    {{choice.choice_text}}
+                </label>
+                <br>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" value="vote">
+    </form>
         <br>
-    {% endfor %}
-</fieldset>
-<input type="submit" value="vote">
-</form>
-<br>
-<a href=" {% url 'polls:index' %} "> Ir a inicio </a>
+        <br>
+        <a href=" {% url 'polls:index' %} "> Ir a inicio </a>
+</body>
+</html>
 
 
 
 
-{% comment %} <h1>{{question.question_text}}</h1>
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }}</li>
-{% endfor %}
-</ul> {% endcomment %}
+
+
+{% comment %} 
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls\sa.css' %}"/>
+ {% endcomment %}
+
+
+
+
